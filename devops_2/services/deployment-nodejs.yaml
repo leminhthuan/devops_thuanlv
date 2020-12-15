@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    something: app-label
+spec:
+  replicas: 1                  # Number of pods
+  selector:                    
+    matchLabels:              
+      app: app-label         
+
+  # Pod template
+  template:
+    metadata:
+      name: app-pod                
+      labels:
+        app: app-label       
+    spec:
+      containers:                       
+        - name: app                     
+          image: thuanlv/node-app      
+          imagePullPolicy: Always       
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: MONGODB_URI
+              value: "mongodb://mongodb-svc:27017/demo"
